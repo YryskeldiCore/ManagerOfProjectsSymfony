@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Password Reset{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                        {% include 'flashes.html.twig' %}
+
+                        <h1>Password Reset</h1>
+
+                        {{ form_start(form) }}
+
+                        <div class="input-group mb-4">
+                            {{ form_widget(form.email, {'attr': {'placeholder': 'Email'}}) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Reset Password</button>
+                        {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
