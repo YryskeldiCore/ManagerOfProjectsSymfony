@@ -46,15 +46,12 @@ class Handler
             throw new \DomainException('User already exists!');
         }
 
-        $user = new User(
+        $user = User::signUpByEmail(
             Id::next(),
-            (new \DateTimeImmutable())->setTimezone(new \DateTimeZone('Asia/Bishkek'))
-        );
-
-        $user->signUpByEmail(
+            new \DateTimeImmutable(),
             $email,
             $this->hasher->hash($command->password),
-            $token = $this->tokenizer->generate()
+            $token = $this->tokenizer->generate(),
         );
 
         $this->users->add($user);

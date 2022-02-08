@@ -1,8 +1,7 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Controller\Auth\OAuth;
-
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,17 +12,17 @@ class FacebookController extends AbstractController
 {
 
     /**
-     * @Route('/oauth/facebook', name="oauth.facebook")
+     * @Route("/connect/facebook", name="connect_facebook_start")
      * @param ClientRegistry $clientRegistry
      * @return Response
      */
     public function connect(ClientRegistry $clientRegistry):Response
     {
-        return $clientRegistry->getClient('facebook_main')->redirect(['public_profile'], []);
+        return $clientRegistry->getClient('facebook_main')->redirect(['public_profile', 'email'], []);
     }
 
     /**
-     * @Route('/oauth/facebook/check', name="oauth.facebook_check")
+     * @Route("/connect/facebook/check", name="connect_facebook_check")
      * @return Response
      */
     public function check():Response

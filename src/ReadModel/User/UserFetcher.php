@@ -1,8 +1,7 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\ReadModel\User;
-
 
 use Doctrine\DBAL\Connection;
 
@@ -11,7 +10,7 @@ class UserFetcher
     /**
      * @var Connection
      */
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {
@@ -29,13 +28,30 @@ class UserFetcher
 
     }
 
-    public function findForAuth(string $email)
+    public function findForAuthByEmail(string $email): array
     {
         $stmt =  $this->connection->createQueryBuilder()
             ->select('id, email, password_hash, role, status')
             ->from('user_users')
             ->where('email = :email')
             ->setParameter(':email', $email)
+            ->execute();
+
+
+        return $stmt->fetchAllAssociative();
+    }
+
+    public function findForAuthByNetwork(string $network, string $identity): array
+    {
+        $stmt =  $this->connection->createQueryBuilder()
+            ->select('id, email, password_hash, role, status')
+            ->from('user_users', 'u')
+            ->innerJoin('u', 'user_user_networks', 'n', 'n.user_id = u.id' )
+            ->where('n.network = :network AND n.identity = :identity')
+            ->setParameters([
+                'network' => $network,
+                'identity' => $identity,
+            ])
             ->execute();
 
 
