@@ -13,8 +13,8 @@ security:
           user_checker: App\Security\UserChecker
           guard:
             authenticators:
-              - App\Security\LoginFormAuthenticator
-              - App\Security\OAuth\FacebookAuthenticator
+                - App\Security\LoginFormAuthenticator
+                - App\Security\OAuth\FacebookAuthenticator
             entry_point: App\Security\LoginFormAuthenticator
           form_login: true
           logout:
@@ -34,5 +34,6 @@ security:
     access_control:
          - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/signup, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/connect/facebook, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/reset, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: ^/, roles: ROLE_USER }
