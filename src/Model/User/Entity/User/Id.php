@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Model\User\Entity\User;
-
 
 use Ramsey\Uuid\Uuid;
 use Webmozart\Assert\Assert;
@@ -12,7 +12,7 @@ class Id
     /**
      * @var string
      */
-    private $value;
+    private string $value;
 
     public function __construct(string $value)
     {

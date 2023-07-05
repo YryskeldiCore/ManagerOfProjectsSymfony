@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Security;
 
 use App\Model\User\Service\PasswordHasher;
@@ -21,9 +23,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    private $urlGenerator;
-    private $csrfTokenManager;
-    private $hasher;
+    private UrlGeneratorInterface $urlGenerator;
+    private CsrfTokenManagerInterface $csrfTokenManager;
+    private PasswordHasher $hasher;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
@@ -78,7 +80,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
         return $this->hasher->validate($credentials['password'], $user->getPassword());
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): RedirectResponse
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);

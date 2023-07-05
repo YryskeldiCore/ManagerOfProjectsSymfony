@@ -1,22 +1,23 @@
 <?php
 
+declare(strict_types=1);
 
-namespace App\Model\User\UseCase\SignUp\Confirm;
+namespace App\Model\User\UseCase\SignUp\Confirm\ByToken;
 
 
-use App\Model\User\Entity\User\UserRepository;
 use App\Model\Flusher;
+use App\Model\User\Entity\User\UserRepository;
 
 class Handler
 {
     /**
      * @var UserRepository
      */
-    private $users;
+    private UserRepository $users;
     /**
      * @var Flusher
      */
-    private $flusher;
+    private Flusher $flusher;
 
     public function __construct(UserRepository $users, Flusher $flusher)
     {

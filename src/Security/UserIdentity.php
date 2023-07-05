@@ -16,11 +16,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class UserIdentity implements UserInterface, EquatableInterface, AuthenticatorInterface
 {
 
-    private $id;
-    private $username;
-    private $password;
-    private $role;
-    private $status;
+    private string $id;
+    private string $username;
+    private string $password;
+    private string $role;
+    private string $status;
 
     public function __construct(
         string $id,
@@ -36,22 +36,22 @@ class UserIdentity implements UserInterface, EquatableInterface, AuthenticatorIn
         $this->status = $status;
     }
 
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         return [$this->role];
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }

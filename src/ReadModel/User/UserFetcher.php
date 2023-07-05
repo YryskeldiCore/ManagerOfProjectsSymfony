@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\ReadModel\User;
 
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Exception;
 
 class UserFetcher
 {
@@ -56,5 +57,67 @@ class UserFetcher
 
 
         return $stmt->fetchAllAssociative();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function findByEmail(string $email): ?ShortView
+    {
+        $stmt = $this->connection->createQueryBuilder()
+            ->select('u.id, u.email, u.role, u.status')
+            ->from('user_users', 'u')
+            ->where('u.email = :email')
+            ->setParameter('email', $email)
+            ->execute();
+
+        $result = $stmt->fetch();
+
+        if ($result === false) {
+            return null;
+        }
+
+        return new ShortView($result['id'], $result['email'], $result['role'], $result['status']);
+    }
+
+    /**
+     * @throws Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function findDetail(string $id): ?DetailView
+    {
+        $stmt = $this->connection->createQueryBuilder()
+            ->select('u.id, u.date, u.email, u.role, u.status')
+            ->from('user_users', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->execute();
+
+        $result = $stmt->fetch();
+
+        if ($result === false) {
+            return null;
+        }
+
+        $detailView = new DetailView($result['id'],$result['date'], $result['email'], $result['role'], $result['status']);
+
+        $stmt = $this->connection->createQueryBuilder()
+            ->select('network', 'identity')
+            ->from('user_user_networks')
+            ->where('user_id = :id')
+            ->setParameter('id', $id)
+            ->execute();
+
+        $result = $stmt->fetchAllAssociative();
+
+        $networks = [];
+
+        foreach ($result as $item) {
+            $networks[] = new NetworkView($item['network'], $item['identity']);
+        }
+
+        $detailView->networks = $networks;
+
+        return $detailView;
     }
 }

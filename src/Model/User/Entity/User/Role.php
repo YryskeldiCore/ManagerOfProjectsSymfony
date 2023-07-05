@@ -1,17 +1,17 @@
 <?php
 
 declare(strict_types=1);
-namespace App\Model\User\Entity\User;
 
+namespace App\Model\User\Entity\User;
 
 use Webmozart\Assert\Assert;
 
 class Role
 {
-    private const USER = 'ROLE_USER';
-    private const ADMIN = 'ROLE_ADMIN';
+    public const USER = 'ROLE_USER';
+    public const ADMIN = 'ROLE_ADMIN';
 
-    private $name;
+    private string $name;
 
     public function __construct(string $name)
     {
@@ -47,12 +47,8 @@ class Role
         return $this->getName() === $role->getName();
     }
 
-    /**
-     * @return string
-     */
     public function getName(): string
     {
         return $this->name;
     }
-
 }

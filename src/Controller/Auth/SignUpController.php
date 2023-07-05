@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Controller\Auth;
 
-
 use App\Model\User\UseCase\SignUp;
+use App\Model\User\UseCase\SignUp\Confirm\ByToken\Handler;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SignUpController extends AbstractController
 {
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {
@@ -52,12 +53,12 @@ class SignUpController extends AbstractController
     /**
      * @Route("/signup/{token}", name="auth.signup.confirm")
      * @param string $token
-     * @param SignUp\Confirm\Handler $handler
+     * @param Handler $handler
      * @return Response
      */
-    public function confirm(string $token, SignUp\Confirm\Handler $handler):Response
+    public function confirm(string $token, Handler $handler):Response
     {
-        $command = new SignUp\Confirm\Command($token);
+        $command = new SignUp\Confirm\ByToken\Command($token);
 
         try {
             $handler->handle($command);

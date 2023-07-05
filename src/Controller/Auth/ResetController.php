@@ -1,8 +1,8 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Controller\Auth;
-
 
 use App\Model\User\UseCase\Reset;
 use App\ReadModel\User\UserFetcher;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ResetController extends AbstractController
 {
 
-    private $logger;
+    private LoggerInterface $logger;
 
     public function __construct(LoggerInterface $logger)
     {

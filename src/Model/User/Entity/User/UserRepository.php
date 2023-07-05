@@ -8,11 +8,13 @@ namespace App\Model\User\Entity\User;
 use App\Model\EntityNotFoundException;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 class UserRepository extends ServiceEntityRepository
 {
 
-    private $em;
+    private EntityManagerInterface $em;
 
     private $repo;
 
@@ -46,7 +48,7 @@ class UserRepository extends ServiceEntityRepository
         /**
          * @var User $user
          */
-        if(!$user = $this->repo->find($id->getValue())){
+        if(!$user = $this->repo->find($id)){
             throw new EntityNotFoundException('User is not found!');
         }
         return $user;
@@ -65,8 +67,8 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
+     * @throws NonUniqueResultException
+     * @throws NoResultException
      */
     public function hasByEmail(Email $email): bool
     {
@@ -79,8 +81,8 @@ class UserRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     * @throws \Doctrine\ORM\NoResultException
+     * @throws NonUniqueResultException
+     * @throws NoResultException
      */
     public function hasByNetworkIdentity(string $network, string $identity): bool
     {

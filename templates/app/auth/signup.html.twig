@@ -17,23 +17,20 @@
                         {{ form_start(form) }}
 
                         <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">@</span>
-                            </div>
+                            <span class="input-group-text">@</span>
                             {{ form_widget(form.email, {'attr': {'placeholder': 'Email', 'class': 'form-control'}}) }}
                             {{ form_errors(form.email) }}
                         </div>
                         <div class="input-group mb-4">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
+                            <span class="input-group-text">
                                     <i class="icon-lock"></i>
-                                </span>
-                            </div>
+                            </span>
                             {{ form_widget(form.password, {'attr': {'placeholder': 'Password', 'class': 'form-control'}}) }}
                             {{ form_errors(form.password) }}
                         </div>
-
-                        <button type="submit" class="btn btn-block btn-success">Create Account</button>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-block btn-success">Create Account</button>
+                        </div>
 
                         {{ form_end(form) }}
                     </div>
