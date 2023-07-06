@@ -99,7 +99,7 @@ class UserFetcher
             return null;
         }
 
-        $detailView = new DetailView($result['id'],$result['date'], $result['email'], $result['role'], $result['status']);
+        $detailView = new DetailView($result['id'],$result['date'], $result['email'] ?? '', $result['role'], $result['status']);
 
         $stmt = $this->connection->createQueryBuilder()
             ->select('network', 'identity')
