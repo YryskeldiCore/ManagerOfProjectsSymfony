@@ -16,28 +16,28 @@
         <div class="card-body">
             <table class="table table-bordered mb-0">
                 <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ user.id }}</td>
-                </tr>
-                <tr>
-                    <th>Created</th>
-                    <td>{{ user.date|date('Y-m-d H:i:s') }}</td>
-                </tr>
-                {% if user.email %}
                     <tr>
-                        <th>Email</th>
-                        <td>{{ user.email }}</td>
+                        <th>Id</th>
+                        <td>{{ user.id }}</td>
                     </tr>
-                {% endif %}
-                <tr>
-                    <th>Role</th>
-                    <td>{{ user.role }}</td>
-                </tr>
-                <tr>
-                    <th>Status</th>
-                    <td>{{ user.status }}</td>
-                </tr>
+                    <tr>
+                        <th>Created</th>
+                        <td>{{ user.date|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                    {% if user.email %}
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <th>Role</th>
+                        <td>{{ user_role(user.role) }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ user_status(user.status) }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
